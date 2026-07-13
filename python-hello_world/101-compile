@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [ -z "$PYFILE" ]; then
+    echo "Error: PYFILE environment variable is not set"
+    exit 1
+fi
+
+if [ ! -f "$PYFILE" ]; then
+    echo "Error: $PYFILE not found"
+    exit 1
+fi
+
+echo "Compiling $PYFILE ..."
+
+python3 -c "
+import py_compile
+py_compile.compile('$PYFILE', cfile='${PYFILE}c')
+"
