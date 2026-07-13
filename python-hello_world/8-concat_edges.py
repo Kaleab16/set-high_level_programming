@@ -1,3 +1,3 @@
 #!/usr/bin/python3
-str = "object-oriented programming with Python"
-print(f"{str}")
+str = "Python is an object-oriented programming language"
+print(str[13:])
