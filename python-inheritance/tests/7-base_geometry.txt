@@ -1,0 +1,50 @@
+=== Test 1: Valid integer validation ===
+Input:
+bg = BaseGeometry()
+bg.integer_validator("my_int", 12)
+bg.integer_validator("width", 89)
+
+Expected: No output (validations pass)
+
+=== Test 2: Non-integer value ===
+Input:
+bg.integer_validator("name", "John")
+
+Expected output:
+[TypeError] name must be an integer
+
+=== Test 3: Value equals 0 ===
+Input:
+bg.integer_validator("age", 0)
+
+Expected output:
+[ValueError] age must be greater than 0
+
+=== Test 4: Negative value ===
+Input:
+bg.integer_validator("distance", -4)
+
+Expected output:
+[ValueError] distance must be greater than 0
+
+=== Test 5: Boolean value (False) ===
+Input:
+bg.integer_validator("flag", False)
+
+Expected output:
+[TypeError] flag must be an integer
+
+Explanation: False is a bool, not int (bool is subclass of int)
+
+=== Test 6: Float value ===
+Input:
+bg.integer_validator("pi", 3.14)
+
+Expected output:
+[TypeError] pi must be an integer
+
+=== Test 7: Large positive integer ===
+Input:
+bg.integer_validator("big", 1000000)
+
+Expected: No output (validates successfully)
