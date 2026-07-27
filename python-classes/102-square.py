@@ -1,54 +1,61 @@
 #!/usr/bin/python3
-"""Defines a Square class with comparison methods."""
+"""Defines a Square class with comparison operators."""
 
 
 class Square:
     """Represents a square."""
 
     def __init__(self, size=0):
+        """Initialize a new Square.
+
+        Args:
+            size (int or float): The size of the new square.
+        """
         self.size = size
 
     @property
     def size(self):
+        """Retrieve the size of the square."""
         return self.__size
 
     @size.setter
     def size(self, value):
-        if not isinstance(value, (int, float)):
+        """Set the size of the square.
+
+        Raises:
+            TypeError: If value is not a number.
+            ValueError: If value is less than 0.
+        """
+        if type(value) not in (int, float):
             raise TypeError("size must be a number")
         if value < 0:
             raise ValueError("size must be >= 0")
         self.__size = value
 
     def area(self):
-        return self.__size ** 2
+        """Return the current area of the square."""
+        return self.__size * self.__size
 
     def __eq__(self, other):
-        if isinstance(other, Square):
-            return self.area() == other.area()
-        return False
+        """Check equality based on area."""
+        return self.area() == other.area()
 
     def __ne__(self, other):
-        if isinstance(other, Square):
-            return self.area() != other.area()
-        return True
-
-    def __lt__(self, other):
-        if isinstance(other, Square):
-            return self.area() < other.area()
-        return NotImplemented
-
-    def __le__(self, other):
-        if isinstance(other, Square):
-            return self.area() <= other.area()
-        return NotImplemented
+        """Check inequality based on area."""
+        return self.area() != other.area()
 
     def __gt__(self, other):
-        if isinstance(other, Square):
-            return self.area() > other.area()
-        return NotImplemented
+        """Check greater-than based on area."""
+        return self.area() > other.area()
 
     def __ge__(self, other):
-        if isinstance(other, Square):
-            return self.area() >= other.area()
-        return NotImplemented
+        """Check greater-than-or-equal based on area."""
+        return self.area() >= other.area()
+
+    def __lt__(self, other):
+        """Check less-than based on area."""
+        return self.area() < other.area()
+
+    def __le__(self, other):
+        """Check less-than-or-equal based on area."""
+        return self.area() <= other.area()
