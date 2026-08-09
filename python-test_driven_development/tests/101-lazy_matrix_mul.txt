@@ -1,0 +1,44 @@
+The ``101-lazy_matrix_mul`` module
+=====================================
+
+Using ``lazy_matrix_mul``
+----------------------------
+
+Import the function:
+
+    >>> lazy_matrix_mul = __import__('101-lazy_matrix_mul').lazy_matrix_mul
+
+Basic square matrix multiplication:
+
+    >>> lazy_matrix_mul([[1, 2], [3, 4]], [[1, 2], [3, 4]])
+    array([[ 7, 10],
+           [15, 22]])
+
+Non-square compatible matrices:
+
+    >>> lazy_matrix_mul([[1, 2]], [[3, 4], [5, 6]])
+    array([[13, 16]])
+
+m_a is a scalar (broadcasts instead of raising in this numpy version):
+
+    >>> lazy_matrix_mul(24, [[1, 2], [3, 4]])
+    array([[24, 48],
+           [72, 96]])
+
+m_a has the wrong shape to align:
+
+    >>> lazy_matrix_mul([24], [[1, 2], [3, 4]])
+    Traceback (most recent call last):
+    ValueError: shapes (1,) and (2,2) not aligned: 1 (dim 0) != 2 (dim 0)
+
+m_b is a scalar (broadcasts instead of raising in this numpy version):
+
+    >>> lazy_matrix_mul([[1, 2], [3, 4]], 24)
+    array([[24, 48],
+           [72, 96]])
+
+Matrices can't be multiplied due to incompatible dimensions:
+
+    >>> lazy_matrix_mul([[1, 2], [3, 4]], [[1, 2, 3], [3, 4, 5], [5, 6, 7]])
+    Traceback (most recent call last):
+    ValueError: shapes (2,2) and (3,3) not aligned: 2 (dim 1) != 3 (dim 0)
