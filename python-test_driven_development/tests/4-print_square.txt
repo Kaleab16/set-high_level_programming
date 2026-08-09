@@ -4,11 +4,11 @@ The ``4-print_square`` module
 Using ``print_square``
 ------------------------
 
-First, let's grab the function:
+Import the function:
 
     >>> print_square = __import__('4-print_square').print_square
 
-Here's the straightforward case, give it a size, get back a square:
+A basic square:
 
     >>> print_square(4)
     ####
@@ -16,38 +16,34 @@ Here's the straightforward case, give it a size, get back a square:
     ####
     ####
 
-What about the smallest real square, just one hash mark?
+Size 1:
 
     >>> print_square(1)
     #
 
-Size 0 is valid too. It just prints nothing, since there's
-nothing to draw:
+Size 0 prints nothing:
 
     >>> print_square(0)
 
-A negative integer is not a valid size, so this raises a
-ValueError:
+Negative integer:
 
     >>> print_square(-1)
     Traceback (most recent call last):
     ValueError: size must be >= 0
 
-Here's the tricky one. A negative float does not get treated the
-same as a negative int. Since it was never a valid integer to
-begin with, this raises TypeError instead:
+Negative float:
 
     >>> print_square(-1.5)
     Traceback (most recent call last):
     TypeError: size must be an integer
 
-Same logic applies even if the float is positive:
+Positive float:
 
     >>> print_square(4.5)
     Traceback (most recent call last):
     TypeError: size must be an integer
 
-Anything that is not a number at all should fail the same way:
+Non-numeric type:
 
     >>> print_square("4")
     Traceback (most recent call last):

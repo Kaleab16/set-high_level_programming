@@ -7,7 +7,7 @@ Defines a function that prints a square of '#' characters.
 
 def print_square(size):
     """Print a square of size `size` using the '#' character."""
-    if not isinstance(size, (int, float)) or isinstance(size, bool):
+    if isinstance(size, bool) or not isinstance(size, (int, float)):
         raise TypeError("size must be an integer")
 
     if isinstance(size, float):
