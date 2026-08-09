@@ -1,0 +1,28 @@
+The ``5-text_indentation`` module
+===================================
+
+Using ``text_indentation``
+----------------------------
+
+Import the function:
+
+    >>> text_indentation = __import__('5-text_indentation').text_indentation
+
+A short example with all three punctuation marks:
+
+    >>> text_indentation("Hello: world. How are you?")
+    Hello:
+    <BLANKLINE>
+    world.
+    <BLANKLINE>
+    How are you?
+
+Non-string input:
+
+    >>> text_indentation(89)
+    Traceback (most recent call last):
+    TypeError: text must be a string
+
+    >>> text_indentation(None)
+    Traceback (most recent call last):
+    TypeError: text must be a string
