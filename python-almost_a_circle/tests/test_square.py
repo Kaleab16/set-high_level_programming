@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Unittest for the Square class."""
+import os
 import unittest
 from models.square import Square
 
@@ -84,6 +85,45 @@ class TestSquare(unittest.TestCase):
         s = Square(1)
         s.update(size=10)
         self.assertEqual(s.size, 10)
+
+    def test_create(self):
+        """create() builds an instance from a dictionary."""
+        s = Square.create(**{'id': 89, 'size': 1, 'x': 2, 'y': 3})
+        self.assertEqual(s.to_dictionary(),
+                          {'id': 89, 'size': 1, 'x': 2, 'y': 3})
+
+    def test_save_to_file_none(self):
+        """save_to_file(None) creates an empty-list JSON file."""
+        Square.save_to_file(None)
+        with open("Square.json", "r") as f:
+            self.assertEqual(f.read(), "[]")
+
+    def test_save_to_file_empty_list(self):
+        """save_to_file([]) creates an empty-list JSON file."""
+        Square.save_to_file([])
+        with open("Square.json", "r") as f:
+            self.assertEqual(f.read(), "[]")
+
+    def test_save_to_file_with_data(self):
+        """save_to_file() writes valid JSON data to disk."""
+        s = Square(5, 1, 2, 10)
+        Square.save_to_file([s])
+        with open("Square.json", "r") as f:
+            content = f.read()
+        self.assertIn('"id": 10', content)
+
+    def test_load_from_file_no_file(self):
+        """load_from_file() returns [] when the file doesn't exist."""
+        if os.path.exists("Square.json"):
+            os.remove("Square.json")
+        self.assertEqual(Square.load_from_file(), [])
+
+    def test_load_from_file_with_data(self):
+        """load_from_file() reconstructs saved instances."""
+        s = Square(5, 1, 2, 10)
+        Square.save_to_file([s])
+        loaded = Square.load_from_file()
+        self.assertEqual(loaded[0].to_dictionary(), s.to_dictionary())
 
 
 if __name__ == "__main__":

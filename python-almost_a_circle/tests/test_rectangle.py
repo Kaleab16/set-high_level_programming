@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Unittest for the Rectangle class."""
+import os
 import unittest
 from models.rectangle import Rectangle
 
@@ -84,9 +85,19 @@ class TestRectangle(unittest.TestCase):
         r = Rectangle(4, 6, 2, 1, 12)
         self.assertEqual(str(r), "[Rectangle] (12) 2/1 - 4/6")
 
-    def test_display_basic(self):
-        """display() runs without error for a plain rectangle."""
-        r = Rectangle(2, 2)
+    def test_display_no_x_no_y(self):
+        """display() with default x=0, y=0."""
+        r = Rectangle(3, 3)
+        r.display()
+
+    def test_display_no_y(self):
+        """display() with a custom x but default y=0."""
+        r = Rectangle(3, 3, 2)
+        r.display()
+
+    def test_display_with_x_and_y(self):
+        """display() with both x and y set."""
+        r = Rectangle(3, 3, 2, 2)
         r.display()
 
     def test_to_dictionary(self):
@@ -111,6 +122,47 @@ class TestRectangle(unittest.TestCase):
         r.update(width=10, height=20)
         self.assertEqual(r.width, 10)
         self.assertEqual(r.height, 20)
+
+    def test_create(self):
+        """create() builds an instance from a dictionary."""
+        r = Rectangle.create(**{'id': 89, 'width': 1,
+                                 'height': 2, 'x': 3, 'y': 4})
+        self.assertEqual(r.to_dictionary(),
+                          {'id': 89, 'width': 1,
+                           'height': 2, 'x': 3, 'y': 4})
+
+    def test_save_to_file_none(self):
+        """save_to_file(None) creates an empty-list JSON file."""
+        Rectangle.save_to_file(None)
+        with open("Rectangle.json", "r") as f:
+            self.assertEqual(f.read(), "[]")
+
+    def test_save_to_file_empty_list(self):
+        """save_to_file([]) creates an empty-list JSON file."""
+        Rectangle.save_to_file([])
+        with open("Rectangle.json", "r") as f:
+            self.assertEqual(f.read(), "[]")
+
+    def test_save_to_file_with_data(self):
+        """save_to_file() writes valid JSON data to disk."""
+        r = Rectangle(3, 5, 1, 2, 10)
+        Rectangle.save_to_file([r])
+        with open("Rectangle.json", "r") as f:
+            content = f.read()
+        self.assertIn('"id": 10', content)
+
+    def test_load_from_file_no_file(self):
+        """load_from_file() returns [] when the file doesn't exist."""
+        if os.path.exists("Rectangle.json"):
+            os.remove("Rectangle.json")
+        self.assertEqual(Rectangle.load_from_file(), [])
+
+    def test_load_from_file_with_data(self):
+        """load_from_file() reconstructs saved instances."""
+        r = Rectangle(3, 5, 1, 2, 10)
+        Rectangle.save_to_file([r])
+        loaded = Rectangle.load_from_file()
+        self.assertEqual(loaded[0].to_dictionary(), r.to_dictionary())
 
 
 if __name__ == "__main__":
