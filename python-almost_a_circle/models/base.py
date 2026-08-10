@@ -103,3 +103,45 @@ class Base:
             d = dict(zip(fields, values))
             instances.append(cls.create(**d))
         return instances
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        """Open a window and draw all given Rectangles and Squares."""
+        import turtle
+        import time
+        import random
+
+        turtle.Screen().bgcolor("#b7312c")
+        turt = turtle.Turtle()
+        turt.shape('turtle')
+        turt.color("white")
+        turt.pensize(3)
+
+        for rect in list_rectangles:
+            turt.showturtle()
+            turt.up()
+            turt.goto(rect.x, rect.y)
+            turt.down()
+            for i in range(2):
+                turt.forward(rect.width)
+                turt.left(90)
+                turt.forward(rect.height)
+                turt.left(90)
+            time.sleep(1)
+            turt.hideturtle()
+
+        for square in list_squares:
+            turt.showturtle()
+            turt.up()
+            turt.goto(square.x, square.y)
+            turt.down()
+            r = lambda: random.randint(0, 255)
+            turt.color('#%02X%02X%02X' % (r(), r(), r()))
+            for i in range(2):
+                turt.forward(square.width)
+                turt.left(90)
+                turt.forward(square.height)
+                turt.left(90)
+            time.sleep(1)
+            turt.hideturtle()
+
+        turtle.exitonclick()
