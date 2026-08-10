@@ -64,3 +64,42 @@ class Base:
         except FileNotFoundError:
             return []
         return [cls.create(**d) for d in list_dicts]
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Write the CSV representation of a list of objects to a file."""
+        filename = "{}.csv".format(cls.__name__)
+        with open(filename, "w", newline="", encoding="utf-8") as f:
+            if cls.__name__ == "Rectangle":
+                fields = ["id", "width", "height", "x", "y"]
+            else:
+                fields = ["id", "size", "x", "y"]
+            if list_objs is None:
+                list_objs = []
+            for obj in list_objs:
+                d = obj.to_dictionary()
+                row = ",".join(str(d[field]) for field in fields)
+                f.write(row + "\n")
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Return a list of instances loaded from <ClassName>.csv."""
+        filename = "{}.csv".format(cls.__name__)
+        try:
+            with open(filename, "r", newline="", encoding="utf-8") as f:
+                lines = f.read().splitlines()
+        except FileNotFoundError:
+            return []
+
+        if cls.__name__ == "Rectangle":
+            fields = ["id", "width", "height", "x", "y"]
+        else:
+            fields = ["id", "size", "x", "y"]
+
+        instances = []
+        for line in lines:
+            if not line:
+                continue
+            values = [int(v) for v in line.split(",")]
+            d = dict(zip(fields, values))
+            instances.append(cls.create(**d))
+        return instances
