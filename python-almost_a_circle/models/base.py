@@ -64,6 +64,7 @@ class Base:
         except FileNotFoundError:
             return []
         return [cls.create(**d) for d in list_dicts]
+
     @classmethod
     def save_to_file_csv(cls, list_objs):
         """Write the CSV representation of a list of objects to a file."""
@@ -103,6 +104,7 @@ class Base:
             d = dict(zip(fields, values))
             instances.append(cls.create(**d))
         return instances
+
     @staticmethod
     def draw(list_rectangles, list_squares):
         """Open a window and draw all given Rectangles and Squares."""
@@ -117,6 +119,7 @@ class Base:
         turt.pensize(3)
 
         for rect in list_rectangles:
+            print(rect)
             turt.showturtle()
             turt.up()
             turt.goto(rect.x, rect.y)
@@ -130,11 +133,15 @@ class Base:
             turt.hideturtle()
 
         for square in list_squares:
+            print(square)
             turt.showturtle()
             turt.up()
             turt.goto(square.x, square.y)
             turt.down()
-            r = lambda: random.randint(0, 255)
+
+            def r():
+                return random.randint(0, 255)
+
             turt.color('#%02X%02X%02X' % (r(), r(), r()))
             for i in range(2):
                 turt.forward(square.width)
