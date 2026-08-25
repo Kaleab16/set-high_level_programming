@@ -1,16 +1,10 @@
-# python-network_1
+### 1. Response Header Value #0
 
-Python scripts covering low-level and high-level network programming: HTTP requests with `urllib`, working with the intranet status API, and handling responses.
+**File:** `1-hbtn_header.py`
 
-## Tasks
-
-### 0. What's My Status?
-
-**File:** `0-hbtn_status.py`
-
-Fetches `intranet.hbtn.io/status` using only the `urllib` package and displays the body of the response.
+Takes a URL as an argument, sends a request, and displays the `X-Request-Id` value from the response header.
 
 Requirements:
-- Must use the `urllib` package only — no other imports
+- Must use only `urllib` and `sys`
 - Must use a `with` statement
-- Output must match the tabulated format shown in the task
+- Value differs on each request — this is expected
