@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+list all states matching a given name from my MySQL database.
+"""
 import MySQLdb
 import sys
 
